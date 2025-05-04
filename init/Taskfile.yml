@@ -9,10 +9,11 @@ tasks:
     desc: Initialize microservice repo with options
     cmds:
       - |
-        read -p "Enter go version for Dockerfile and module: " GO_VERSION &&
+        read -p "Enter go version for Dockerfile and module(default: {{.DefaultGoVersion}}): " GO_VERSION &&
         sed -i "s/FROM golang:[0-9.]\+/FROM golang:${GO_VERSION:-{{.DefaultGoVersion}}}/g" Dockerfile &&
         sed -i "s/go [0-9.]\+/go ${GO_VERSION:-{{.DefaultGoVersion}}}/g" go.mod &&
 
-        read -p "Enter go module name: " MODULE_NAME
+        read -p "Enter go module name(default: {{.DefaultModuleName}}): " MODULE_NAME
         sed -i "s/module [a-zA-Z.]\+/module ${MODULE_NAME:-{{.DefaultModuleName}}}/g" go.mod 
-    # interactive: true
+    interactive: true
+    silent: true

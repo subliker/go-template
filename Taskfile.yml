@@ -6,8 +6,16 @@ tasks:
       - echo hi
   
   init:
+    desc: Initializes microservice repo with options
     preconditions:
       - sh: '[ -d init ]'
-        msg: 'Project was already initialized'
+        msg: 'Project was already initialized, re-clone repository'
     cmds:
-      - task -t ./init/Taskfile.yml init
+      - task -t ./init/Taskfile.yml -d . init
+      - |
+        read -p 'Delete init files[y/n]: ' DELETE_INIT &&
+        if [ "${DELETE_INIT:-y}" = "y" ]; then
+          rm -r init
+        fi
+    interactive: true
+    silent: true
