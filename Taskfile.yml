@@ -1,0 +1,13 @@
+version: '3'
+
+tasks:
+  up:
+    cmds:
+      - echo hi
+  
+  init:
+    preconditions:
+      - sh: '[ -d init ]'
+        msg: 'Project was already initialized'
+    cmds:
+      - task -t ./init/Taskfile.yml init
